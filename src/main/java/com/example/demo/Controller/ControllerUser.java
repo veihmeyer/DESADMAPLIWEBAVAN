@@ -13,36 +13,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.example.demo.Controller.model.Endereco;
-import com.example.demo.Controller.repository.EnderecoRepository;
+import com.example.demo.Controller.model.User;
+import com.example.demo.Controller.repository.UserRepository;
 
 @RestController
-@RequestMapping("/Endereco")
-public class ControllerEndereco {
-
-	//@GetMapping
-	//public String teste() {
-		//return "Fui chamado pelo metódo GET (Endereco)";
-	//}
+@RequestMapping("/User")
+public class ControllerUser {
 	@Autowired
-	private EnderecoRepository repository;
+	private UserRepository repository;
 	
 	@PostMapping
-	public Endereco salvar(@RequestBody Endereco endereco) {
-		return this.repository.save(endereco);
+	public User salvar(@RequestBody User user) {
+		return this.repository.save(user);
 	}
 	
 	@PutMapping("/{id}")
-	public Endereco editar(@PathVariable("id") Long id, @RequestBody Endereco endereco) {
-		Endereco clienteDoBancoDeDados = this.repository.findById(id).get();
-		BeanUtils.copyProperties(endereco, clienteDoBancoDeDados, "id");
+	public User editar(@PathVariable("id") Long id, @RequestBody User user) {
+		User clienteDoBancoDeDados = this.repository.findById(id).get();
+		BeanUtils.copyProperties(user, clienteDoBancoDeDados, "id");
 		this.repository.save(clienteDoBancoDeDados);
 		return clienteDoBancoDeDados;
 
 	}
 	@GetMapping
-	public List<Endereco> listar() {
+	public List<User> listar() {
 		return this.repository.findAll();
 	}
 	
@@ -51,5 +45,4 @@ public class ControllerEndereco {
 		this.repository.deleteById(id);
 		return ("Usuário (id) " + (id) + ": apagado com sucesso");
 	}
-	
 }
